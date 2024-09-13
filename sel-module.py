@@ -1,10 +1,10 @@
 from seleniumwire import webdriver
 from selenium.webdriver.firefox.options import Options
-import Turquoise_Logger
+import tools.turquoise_logger as turquoise_logger
 
 class SeleniumWireModule:
     def __init__(self):
-        logg = Turquoise_Logger.Logger()
+        logg = turquoise_logger.Logger()
         log = logg.logging()
         initial_url = "https://www.google.com"
 
@@ -89,6 +89,7 @@ class SeleniumWireModule:
     def tearDown(self):
         self.driver.quit()
 
+# TEST
 wm = SeleniumWireModule()
 wm_is_up = wm.healthcheck()
 
