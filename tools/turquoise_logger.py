@@ -25,7 +25,7 @@ class Logger:
         g2 = self.RGB(0, 0, 128)
         bold = "\033[1m"
         reset = "\033[0m"
-        logging.basicConfig(filename='log_toast.log', encoding='UTF-8', level=logging.DEBUG, format='%(asctime)s [%(name)s] %(message)s')
+        logging.basicConfig(filename='resources/log_toast.log', encoding='UTF-8', level=logging.DEBUG, format='%(asctime)s [%(name)s] %(message)s')
         logger = logging.getLogger(f'{self.script_name}')
         logger.setLevel(logging.DEBUG)
         ch = logging.StreamHandler()

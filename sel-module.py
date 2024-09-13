@@ -1,3 +1,4 @@
+from os import path
 from seleniumwire import webdriver
 from selenium.webdriver.firefox.options import Options
 import tools.turquoise_logger as turquoise_logger
@@ -7,6 +8,8 @@ class SeleniumWireModule:
     def __init__(self):
         gui_enhancements.run()
         logg = turquoise_logger.Logger()
+        path_firefox_binary = 'tools/geckodriver.exe'
+        path_geckodriver_log = path.abspath('resources/geckodriver.log')
         log = logg.logging()
         localhost = '127.0.0.1'
         initial_url = 'https://www.google.com'
@@ -28,9 +31,11 @@ class SeleniumWireModule:
         # options.set_preference('intl.accept_languages', random.choice(localesList).lower())
         # options.set_preference('general.useragent.override', random.choice(userAgentList))
 
-        profile_path = open('profile_path', 'r').read()
+        profile_path = open('resources/profile_path', 'r').read()
 
-        driver = webdriver.Firefox(firefox_profile=profile_path, options=options)
+        driver = webdriver.Firefox(firefox_profile=profile_path,
+                                   options=options, executable_path=path_firefox_binary,
+                                   service_log_path=path_geckodriver_log)
         driver.implicitly_wait(10)
         log.debug(f'Webdriver is UP')
 

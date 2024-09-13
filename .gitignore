@@ -1,4 +1,6 @@
-geckodriver.*
-log_toast.log
-profile_path
+resources/geckodriver*
+tools/geckodriver*
+resources/log_toast.log
+resources/profile_path
+resources/useragents.txt
 tools/__pycache__*
