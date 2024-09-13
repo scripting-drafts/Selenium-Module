@@ -5,7 +5,9 @@ from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.common.by import By
+import mod_initializer as gui_enhancements
 
+gui_enhancements.run_useragent()
 input_file = '../resources/useragents.txt'
 userAgents = open(input_file, 'w')
 

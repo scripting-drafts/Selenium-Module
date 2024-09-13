@@ -6,7 +6,7 @@ import tools.mod_initializer as gui_enhancements
 
 class SeleniumWireModule:
     def __init__(self):
-        gui_enhancements.run()
+        gui_enhancements.run_sel()
         logg = turquoise_logger.Logger()
         path_firefox_binary = 'tools/geckodriver.exe'
         path_geckodriver_log = path.abspath('resources/geckodriver.log')
