@@ -8,6 +8,7 @@ class SeleniumWireModule:
         gui_enhancements.run()
         logg = turquoise_logger.Logger()
         log = logg.logging()
+        localhost = '127.0.0.1'
         initial_url = 'https://www.google.com'
 
         options = Options()
@@ -34,6 +35,7 @@ class SeleniumWireModule:
         log.debug(f'Webdriver is UP')
 
         self.log = log
+        self.localhost = localhost
         self.initial_url = initial_url
         self.driver = driver
 
@@ -47,34 +49,31 @@ class SeleniumWireModule:
             self.log.debug('The driver appears to be OK')
             status = True
         except Exception as e:
-            self.log.debug('The driver appears to be NOK')
-            self.log.debug(f'{e}')
+            self.log.debug(f'The driver appears to be NOK - {e}')
             status = False
         
         return status
 
-    def connection_attempt(self, attempts_count=2):
+    def connection_attempt(self, max_attempts_count=2):
         '''Commits attempts_count connection attempts to the given initial_url'''
-        error = None
+        attempts_count = 1
         initial_url=self.initial_url
 
-        while attempts_count:
-            try:
-                self.log.debug(f'Connect -> [{initial_url}]')
-                self.driver.get(initial_url)
-            except Exception as error:
-                self.log.error(f'ERROR {error}')
-            
-            attempts_count -= 1
+        while not attempts_count > max_attempts_count:
+            self.log.debug(f'{self.localhost} <-> {initial_url}')
+            self.driver.get(initial_url)
 
-            if not error:
-                attempts_num = attempts_count
-                attempts_count = 0            
-                self.log.debug(f'Realized in {attempts_num} attempts')
-                is_connected = True
-            elif attempts_count == 0:
-                self.log.debug('Failed to connect')
+            if len(self.driver.requests) > 0:
+                if self.driver.requests[0].response.status_code == 200:
+                    self.log.debug(f'Connection reached | Attempts: {attempts_count}')
+                    attempts_count = max_attempts_count
+                    is_connected = True
+            
+            else:
+                self.log.debug(f'Failed to connect | Attempts: {attempts_count}')
                 is_connected = False
+
+            attempts_count += 1
             
         self.is_connected = is_connected
 

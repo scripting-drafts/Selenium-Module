@@ -9,6 +9,6 @@ def run():
     \____/ \___|_|\___|_| |_|_|\__,_|_| |_| |_|\/  \/|_|_|  \___|
     ''')
 
-    print('''\U0001F310 Developed by Gerard Sala @ http://www.github.com/scripting-drafts
+    print('''\U0001F310 Developed by Gerard Sala @ https://www.github.com/scripting-drafts
           
           ''')
