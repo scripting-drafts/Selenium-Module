@@ -17,15 +17,17 @@ profile_path = open('profile_path', 'r').read()
 
 driver = webdriver.Firefox(firefox_profile=profile_path, options=options)
 driver.implicitly_wait(10)
+log.debug(f'Webdriver is up')
 
 def connection_attempts(initial_url=initial_url, attempts_count=2):
     '''Commits attempts_count connection attempts to the given initial_url'''
     error = None
     while attempts_count:
         try:
+            log.debug(f'Connecting -> [{initial_url}]')
             driver.get(initial_url)
         except Exception as error:
-            log.error(f'{error}')
+            log.error(f'ERROR {error}')
         
         attempts_count -= 1
 
