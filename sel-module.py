@@ -1,12 +1,14 @@
 from seleniumwire import webdriver
 from selenium.webdriver.firefox.options import Options
 import tools.turquoise_logger as turquoise_logger
+import tools.mod_initializer as gui_enhancements
 
 class SeleniumWireModule:
     def __init__(self):
+        gui_enhancements.run()
         logg = turquoise_logger.Logger()
         log = logg.logging()
-        initial_url = "https://www.google.com"
+        initial_url = 'https://www.google.com'
 
         options = Options()
         options.add_argument('--headless')
@@ -16,13 +18,13 @@ class SeleniumWireModule:
         options.set_preference('useAutomationExtension', False)
         options.set_preference('privacy.trackingprotection.enabled', True)
 
-        options.set_preference("browser.cache.disk.enable", False)
-        options.set_preference("browser.cache.memory.enable", False)
-        options.set_preference("browser.cache.offline.enable", False)
-        options.set_preference("network.http.use-cache", False)
+        options.set_preference('browser.cache.disk.enable', False)
+        options.set_preference('browser.cache.memory.enable', False)
+        options.set_preference('browser.cache.offline.enable', False)
+        options.set_preference('network.http.use-cache', False)
 
         # USER AGENT OPT
-        # options.set_preference("intl.accept_languages", random.choice(localesList).lower())
+        # options.set_preference('intl.accept_languages', random.choice(localesList).lower())
         # options.set_preference('general.useragent.override', random.choice(userAgentList))
 
         profile_path = open('profile_path', 'r').read()
@@ -43,11 +45,13 @@ class SeleniumWireModule:
             assert(self.driver.service.process.poll() == None)
             self.driver.service.assert_process_still_running()
             self.log.debug('The driver appears to be OK')
+            status = True
         except Exception as e:
             self.log.debug('The driver appears to be NOK')
             self.log.debug(f'{e}')
+            status = False
         
-        return True
+        return status
 
     def connection_attempt(self, attempts_count=2):
         '''Commits attempts_count connection attempts to the given initial_url'''
@@ -87,7 +91,15 @@ class SeleniumWireModule:
             self.log.debug('The driver is not available')
 
     def tearDown(self):
+        '''Graceful shutdown and status verification'''
         self.driver.quit()
+        self.log.debug('Verifying webdriver shutdown')
+        status = self.healthcheck()
+
+        if status == False:
+            self.log.debug('Successful driver termination')
+        else:
+            self.log.error('Unsuccessful driver termination')
 
 # TEST
 wm = SeleniumWireModule()

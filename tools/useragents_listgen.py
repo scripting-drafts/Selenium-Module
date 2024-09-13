@@ -1,7 +1,6 @@
+# Originally developed @ https://github.com/scripting-drafts/User-Agent-Scraper/
 from selenium import webdriver
-from time import sleep
 from sys import argv
-import random
 
 script, input_file = argv
 userAgents = open(input_file, 'w')

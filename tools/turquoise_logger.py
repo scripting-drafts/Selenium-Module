@@ -1,4 +1,4 @@
-from datetime import datetime
+# Originally developed @ https://github.com/scripting-drafts/Turquoise-Logger
 import logging
 import os
 
@@ -20,7 +20,6 @@ class Logger:
 
     def logging(self):
         '''Reusable logger'''
-        # defaults = str(datetime.today().strftime("%d-%m-%Y_%H-%M-%S"))
         g0 = self.RGB()
         g1 = self.RGB(127, 255, 212)
         g2 = self.RGB(0, 0, 128)
