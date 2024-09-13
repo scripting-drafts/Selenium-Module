@@ -2,7 +2,6 @@ from seleniumwire import webdriver
 from selenium.webdriver.firefox.options import Options
 import Turquoise_Logger
 
-
 logg = Turquoise_Logger.Logger()
 log = logg.logging()
 initial_url = "https://www.google.com"
